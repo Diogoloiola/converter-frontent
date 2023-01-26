@@ -33,6 +33,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    border-radius: 0.4rem;
 }
 
 .remove {
@@ -55,6 +56,6 @@ const uploadFile = (event: Event) => {
 }
 
 const removeElement = (id: number) => {
-    files.value = files.value?.filter((file, index) => index !== id)
+    files.value = []
 }
 </script>
