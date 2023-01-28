@@ -1,11 +1,14 @@
 <template>
     <div class="inputfile-box">
-        <input type="file" id="file" class="inputfile" @change='uploadFile($event)'>
+        <input @input="handleChange" type="file" id="file" class="inputfile" @change='uploadFile($event)'>
         <label for="file">
             <div class="file-box">
                 Selecione os Arquivos
             </div>
         </label>
+        <div class="error-message">
+            {{ errorMessage }}
+        </div>
     </div>
     <div>
         <div v-for="(file, i) in files" :key="i">
@@ -46,7 +49,9 @@
 </style>
 
 <script setup lang="ts">
+import { useField } from 'vee-validate';
 import { ref } from 'vue';
+import { defineProps, toRef } from 'vue';
 
 const files = ref<File[]>();
 
@@ -58,4 +63,15 @@ const uploadFile = (event: Event) => {
 const removeElement = (id: number) => {
     files.value = []
 }
+
+type Props = {
+    name: string;
+}
+
+const props = defineProps<Props>();
+
+const name = toRef(props, 'name')
+
+const { errorMessage, handleChange } = useField(name || 'tmp');
+
 </script>

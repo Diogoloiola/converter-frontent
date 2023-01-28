@@ -1,13 +1,13 @@
 <template>
     <section class="mt-3">
-        <div class="card">
+        <form class="card" @submit="onSubmit">
             <div class="card-header">
                 <div class="container d-flex">
                     <div class="step">
                         <span>1</span>
                     </div>
                     <div class="container-btn">
-                        <AppUploadFiles />
+                        <AppUploadFiles name="file"/>
                     </div>
                 </div>
             </div>
@@ -28,7 +28,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </form>
     </section>
 </template>
 
@@ -75,4 +75,24 @@
 <script setup lang="ts">
 import AppButton from './AppButton.vue';
 import AppUploadFiles from './AppUploadFiles.vue';
+import * as yup from 'yup';
+import { useForm } from 'vee-validate';
+
+const schema = yup.object().shape({
+    file: yup.mixed().required('File is required').test('extension file', 'Format not supported', (value: File) => {
+        if(!value) return false;
+
+        return value.type.includes('audio');
+    }),
+})
+
+
+const { handleSubmit, isSubmitting } = useForm({
+  validationSchema: schema,
+})
+
+const onSubmit = handleSubmit(values => {
+  console.log(values);
+})
+
 </script>
