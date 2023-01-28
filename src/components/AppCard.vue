@@ -24,7 +24,7 @@
                         <span>3</span>
                     </div>
                     <div class="container-btn">
-                        <AppButton content="Converter" background="secondary" />
+                        <AppButton content="Converter" :disable="isSubmitting" background="secondary" />
                     </div>
                 </div>
             </div>

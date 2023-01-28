@@ -1,5 +1,5 @@
 <template>
-    <button class="btn" :class="defineClassForComponent()">{{ content }}</button>
+    <button class="btn" :class="defineClassForComponent()" :disabled="disable || false">{{ content }}</button>
 </template>
 
 <style scoped>
@@ -40,6 +40,7 @@ type Props = {
     content: string
     background?: string;
     size?: string
+    disable?: boolean
 }
 
 const props = defineProps<Props>();
