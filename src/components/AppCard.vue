@@ -7,7 +7,7 @@
                         <span>1</span>
                     </div>
                     <div class="container-btn">
-                        <AppUploadFiles name="file"/>
+                        <AppUploadFiles name="file" />
                     </div>
                 </div>
             </div>
@@ -77,22 +77,33 @@ import AppButton from './AppButton.vue';
 import AppUploadFiles from './AppUploadFiles.vue';
 import * as yup from 'yup';
 import { useForm } from 'vee-validate';
+import audioRepository from '../api/audioRepository';
 
 const schema = yup.object().shape({
     file: yup.mixed().required('File is required').test('extension file', 'Format not supported', (value: File) => {
-        if(!value) return false;
+        if (!value) return false;
 
         return value.type.includes('audio');
     }),
 })
 
-
 const { handleSubmit, isSubmitting } = useForm({
-  validationSchema: schema,
+    validationSchema: schema,
 })
 
 const onSubmit = handleSubmit(values => {
-  console.log(values);
+
+    const params = {
+        audio: {
+            file: values.file,
+            output_file_name: 'novo2',
+            to_format: 'mp3'
+        }
+    }
+
+    audioRepository.converterAudio(params).then((response) =>{
+        console.log(response);
+    })
 })
 
 </script>
