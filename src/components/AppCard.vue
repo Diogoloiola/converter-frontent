@@ -19,6 +19,10 @@
                     <div>
                         <AppCodec />
                     </div>
+                    <div>
+                        <button @click="modalActive = true" type="button">Configuracoes avançadas</button>
+                        <AppModal :active="modalActive" @click="closeModal" />
+                    </div>
                 </div>
             </div>
             <div class="card-body">
@@ -76,12 +80,15 @@
 </style>
 
 <script setup lang="ts">
+import { ref } from 'vue'
 import AppButton from './AppButton.vue';
 import AppUploadFiles from './AppUploadFiles.vue';
+import AppModal from './AppModal.vue';
 import AppCodec from './AppCodec.vue';
 import * as yup from 'yup';
 import { useForm } from 'vee-validate';
 import audioRepository from '../api/audioRepository';
+
 
 const schema = yup.object().shape({
     codec: yup.string().required(),
@@ -110,5 +117,9 @@ const onSubmit = handleSubmit(values => {
         console.log(response);
     })
 })
+
+const modalActive = ref(false);
+
+const closeModal = () => modalActive.value = !modalActive.value
 
 </script>
