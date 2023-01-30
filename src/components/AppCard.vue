@@ -84,6 +84,7 @@ import { useForm } from 'vee-validate';
 import audioRepository from '../api/audioRepository';
 
 const schema = yup.object().shape({
+    codec: yup.string().required(),
     file: yup.mixed().required('File is required').test('extension file', 'Format not supported', (value: File) => {
         if (!value) return false;
 
@@ -100,12 +101,12 @@ const onSubmit = handleSubmit(values => {
     const params = {
         audio: {
             file: values.file,
-            output_file_name: 'novo2',
-            to_format: 'mp3'
+            output_file_name: values.file.name,
+            to_format: values.codec
         }
     }
 
-    audioRepository.converterAudio(params).then((response) =>{
+    audioRepository.converterAudio(params).then((response) => {
         console.log(response);
     })
 })

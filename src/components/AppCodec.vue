@@ -4,6 +4,9 @@
             @click="setActiveCodec(codec.name)">
             {{ codec.name }}
         </div>
+        <div>
+            {{ errorMessage }}
+        </div>
     </div>
 </template>
 
@@ -38,8 +41,9 @@
 </style>
 
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { onBeforeMount, ref } from 'vue';
 import mockCodecs from '../mocks/codecs';
+import { useField } from 'vee-validate';
 
 const codecs = ref(mockCodecs);
 
@@ -51,5 +55,12 @@ const setActiveCodec = (codec: string) => {
             quality: element.quality
         }
     })
+    setValue(codec);
 }
+
+const { errorMessage, setValue } = useField('codec');
+
+onBeforeMount(() => {
+    setValue(codecs.value.find(element => element.active)?.name || 'mp3')
+})
 </script>
