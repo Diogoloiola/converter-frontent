@@ -16,6 +16,9 @@
                     <div class="step">
                         <span>2</span>
                     </div>
+                    <div>
+                        <AppCodec />
+                    </div>
                 </div>
             </div>
             <div class="card-body">
@@ -75,6 +78,7 @@
 <script setup lang="ts">
 import AppButton from './AppButton.vue';
 import AppUploadFiles from './AppUploadFiles.vue';
+import AppCodec from './AppCodec.vue';
 import * as yup from 'yup';
 import { useForm } from 'vee-validate';
 import audioRepository from '../api/audioRepository';
