@@ -19,8 +19,9 @@
                     <div>
                         <AppCodec />
                     </div>
-                    <div>
-                        <button @click="modalActive = true" type="button">Configuracoes avançadas</button>
+                    <div style="margin-left: auto;">
+                        <AppButton content="Configuracoes avancadas" background="secondary" size="sm"
+                            @click="modalActive = true" />
                         <AppModal :active="modalActive" @click="closeModal" />
                     </div>
                 </div>
@@ -31,7 +32,7 @@
                         <span>3</span>
                     </div>
                     <div class="container-btn">
-                        <AppButton content="Converter" :disable="isSubmitting" background="secondary" />
+                        <AppButton :type="'submit'" content="Converter" :disable="isSubmitting" background="secondary" />
                     </div>
                 </div>
             </div>

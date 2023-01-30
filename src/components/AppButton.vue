@@ -1,5 +1,5 @@
 <template>
-    <button class="btn" :class="defineClassForComponent()" :disabled="disable || false">{{ content }}</button>
+    <button class="btn" :type="type || 'button'" :class="defineClassForComponent()" :disabled="disable || false">{{ content }}</button>
 </template>
 
 <style scoped>
@@ -19,6 +19,10 @@
     padding: 1rem;
 }
 
+.sm {
+    padding: 0.7rem;
+}
+
 .primary {
     background-color: #5da0dd;
     color: var(--white);
@@ -29,7 +33,7 @@
 .secondary {
     background-color: var(--gray-two);
     color: #5d6570;
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     font-weight: bold;
 }
 </style>
@@ -41,6 +45,7 @@ type Props = {
     background?: string;
     size?: string
     disable?: boolean
+    type?: "button" | "submit" | "reset"
 }
 
 const props = defineProps<Props>();
