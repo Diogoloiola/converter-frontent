@@ -22,7 +22,7 @@
                     <div style="margin-left: auto;">
                         <AppButton content="Configuracoes avancadas" background="secondary" size="sm"
                             @click="modalActive = true" />
-                        <AppModal :active="modalActive" @click="closeModal" />
+                        <AppModal :active="modalActive" @closeModal="closeModal" />
                     </div>
                 </div>
             </div>
@@ -86,19 +86,10 @@ import AppButton from './AppButton.vue';
 import AppUploadFiles from './AppUploadFiles.vue';
 import AppModal from './AppModal.vue';
 import AppCodec from './AppCodec.vue';
-import * as yup from 'yup';
 import { useForm } from 'vee-validate';
 import audioRepository from '../api/audioRepository';
+import schema from '../validations/yup/audioConverter';
 
-
-const schema = yup.object().shape({
-    codec: yup.string().required(),
-    file: yup.mixed().required('File is required').test('extension file', 'Format not supported', (value: File) => {
-        if (!value) return false;
-
-        return value.type.includes('audio');
-    }),
-})
 
 const { handleSubmit, isSubmitting } = useForm({
     validationSchema: schema,
