@@ -89,6 +89,10 @@ import AppCodec from './AppCodec.vue';
 import { useForm } from 'vee-validate';
 import audioRepository from '../api/audioRepository';
 import schema from '../validations/yup/audioConverter';
+import { AxiosError } from 'axios';
+import { useToast } from 'vue-toastification';
+
+const toast = useToast();
 
 
 const { handleSubmit, isSubmitting } = useForm({
@@ -108,6 +112,8 @@ const onSubmit = handleSubmit(values => {
 
     audioRepository.converterAudio(params).then((response) => {
         console.log(response);
+    }).catch((error: AxiosError) => {
+        toast.error(error.message);
     })
 })
 
