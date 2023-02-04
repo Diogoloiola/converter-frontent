@@ -12,7 +12,7 @@
                 </div>
             </div>
             <div class="card-body">
-                <div class="container d-flex">
+                <div class="container d-flex" style="flex-wrap: wrap;">
                     <div class="step">
                         <span>2</span>
                     </div>
@@ -20,7 +20,7 @@
                         <AppCodec />
                     </div>
                     <div style="margin-left: auto;">
-                        <AppButton content="Configuracoes avancadas" background="secondary" size="sm"
+                        <AppButton content="config..." background="secondary" size="sm"
                             @click="modalActive = true" />
                         <AppModal :active="modalActive" @closeModal="closeModal" />
                     </div>
@@ -77,6 +77,12 @@
     border-radius: 0.4rem;
     margin-top: 1rem;
     margin-left: 1rem;
+}
+
+@media screen and (max-width: 768px){
+    .card{
+        width: 100%;
+    }
 }
 </style>
 
