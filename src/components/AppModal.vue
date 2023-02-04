@@ -1,14 +1,17 @@
 <template>
     <div id="openModal-about" class="modal_dialog" :class="{ active: active }">
         <div>
-            <a href="#close" title="Close" class="close" @click="$emit('closeModal')">X</a>
-            <h2>Modal</h2>
-            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
-                industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and
-                scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap
-                into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the
-                release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing
-                software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+            <a href="#close" title="Close" class="close" @click="() => emit('closeModal')">X</a>
+            <h2>Configuraçoes avancadas</h2>
+            <div>
+                <label for="select">Qualidade do aúdio</label>
+                <select v-model="value" id="select">
+                    <option :value="quality.value" v-for="(quality, index) in qualities" :key="index">
+                        {{ quality.name }} - {{ quality.value }} kbps
+                    </option>
+                </select>
+                <div>{{ errorMessage }}</div>
+            </div>
         </div>
     </div>
 </template>
@@ -70,14 +73,49 @@
 .close:hover {
     background: #fa3f6f;
 }
+
+label {
+    display: block;
+}
 </style>
 
 <script lang="ts" setup>
+import { useFormValues, useField } from 'vee-validate';
+import { watch, ref, onBeforeMount } from 'vue'
+import { InferType } from 'yup';
+import audioConverterSchema from '../validations/yup/audioConverter';
+import codecs from '../mocks/codecs';
+
 type Pros = {
     active: boolean
 };
 
-const pros = defineProps<Pros>();
+type Quality = {
+    name: string,
+    value: number
+}
 
+const pros = defineProps<Pros>();
 const emit = defineEmits(['closeModal'])
+
+const values = useFormValues<InferType<typeof audioConverterSchema>>();
+const qualities = ref<Quality[]>([])
+
+const getQuality = async () => {
+    const currentCodec = values.value.codec || 'mp3'
+
+    qualities.value = codecs.find((codec) => codec.name === currentCodec)?.quality || []
+};
+
+const { errorMessage, value, setValue } = useField('quality');
+
+watch(() => pros.active, () => {
+    getQuality();
+}, { immediate: true });
+
+
+onBeforeMount(() => {
+    setValue(64)
+})
+
 </script>

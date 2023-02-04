@@ -101,7 +101,8 @@ const onSubmit = handleSubmit(values => {
         audio: {
             file: values.file,
             output_file_name: values.file.name,
-            to_format: values.codec
+            to_format: values.codec,
+            quality: values.quality
         }
     }
 

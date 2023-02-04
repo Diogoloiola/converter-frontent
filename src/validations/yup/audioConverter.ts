@@ -2,6 +2,7 @@ import * as yup from 'yup';
 
 const schema = yup.object().shape({
     codec: yup.string().required(),
+    quality: yup.number().nullable(),
     file: yup.mixed().required('File is required').test('extension file', 'Format not supported', (value: File) => {
         if (!value) return false;
 
