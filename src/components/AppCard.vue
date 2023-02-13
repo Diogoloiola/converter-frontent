@@ -38,6 +38,7 @@
             </div>
         </form>
     </section>
+    <AppOverlay text="Iniciando a conversão" v-if="overlayActive" />
 </template>
 
 <style>
@@ -88,18 +89,20 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import AppButton from './AppButton.vue';
-import AppUploadFiles from './AppUploadFiles.vue';
-import AppModal from './AppModal.vue';
-import AppCodec from './AppCodec.vue';
 import { useForm } from 'vee-validate';
-import audioRepository from '../api/audioRepository';
 import schema from '../validations/yup/audioConverter';
 import { AxiosError } from 'axios';
 import { useToast } from 'vue-toastification';
+import AppModal from './AppModal.vue';
+import AppButton from './AppButton.vue';
+import AppUploadFiles from './AppUploadFiles.vue';
+import AppOverlay from './AppOverlay.vue';
+import AppCodec from './AppCodec.vue';
+
+import audioRepository from '../api/audioRepository';
 
 const toast = useToast();
-
+const overlayActive = ref(false);
 
 const { handleSubmit, isSubmitting } = useForm({
     validationSchema: schema,
@@ -115,12 +118,13 @@ const onSubmit = handleSubmit(values => {
             quality: values.quality
         }
     }
+    overlayActive.value = true;
 
     audioRepository.converterAudio(params).then((response) => {
-        console.log(response);
+        toast.success(response.data.message);
     }).catch((error: AxiosError) => {
         toast.error(error.message);
-    })
+    }).finally(() => overlayActive.value = true)
 })
 
 const modalActive = ref(false);
