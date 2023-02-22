@@ -26,7 +26,7 @@
     border-right: 1px solid #d6d8db;
 }
 
-.codec:nth-last-child(1) {
+.codec:nth-child(6) {
     border-top-right-radius: 0.5rem;
     border-bottom-right-radius: 0.5rem;
 }

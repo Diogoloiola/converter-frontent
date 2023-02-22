@@ -121,7 +121,7 @@ const onSubmit = handleSubmit(values => {
     overlayActive.value = true;
 
     audioRepository.converterAudio(params).then((response) => {
-        toast.success(response.data.message);
+        toast.success('Conversão finalizada!');
     }).catch((error: AxiosError) => {
         toast.error(error.message);
     }).finally(() => overlayActive.value = false)
