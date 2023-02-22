@@ -62,6 +62,7 @@ const uploadFile = (event: Event) => {
 
 const removeElement = (id: number) => {
     files.value = []
+    setValue(null);
 }
 
 type Props = {
@@ -72,6 +73,6 @@ const props = defineProps<Props>();
 
 const name = toRef(props, 'name')
 
-const { errorMessage, handleChange } = useField(name || 'tmp');
+const { errorMessage, handleChange, setValue } = useField(name || 'tmp');
 
 </script>
