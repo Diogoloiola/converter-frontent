@@ -113,7 +113,7 @@ const onSubmit = handleSubmit(values => {
     const params = {
         audio: {
             file: values.file,
-            output_file_name: values.file.name,
+            output_file_name: values.file.name.slice(0, values.file.name.lastIndexOf('.')).replaceAll(' ', '-'),
             to_format: values.codec,
             quality: values.quality
         }
@@ -124,7 +124,7 @@ const onSubmit = handleSubmit(values => {
         toast.success(response.data.message);
     }).catch((error: AxiosError) => {
         toast.error(error.message);
-    }).finally(() => overlayActive.value = true)
+    }).finally(() => overlayActive.value = false)
 })
 
 const modalActive = ref(false);
